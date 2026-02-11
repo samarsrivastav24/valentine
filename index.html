@@ -2,67 +2,105 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Will You Be My Valentine? 💖</title>
+<title>For My Cutie 💖</title>
 
 <style>
-body {
-  margin: 0;
-  height: 100vh;
-  background: linear-gradient(135deg, #ff758c, #ff7eb3);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: "Comic Sans MS", cursive;
-  overflow: hidden;
+body{
+    margin:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background: linear-gradient(135deg,#ff758c,#ff7eb3);
+    font-family: "Comic Sans MS", cursive;
+    text-align:center;
+    overflow:hidden;
 }
 
-.box {
-  background: white;
-  padding: 30px;
-  border-radius: 25px;
-  text-align: center;
-  box-shadow: 0 15px 30px rgba(0,0,0,0.25);
-  width: 320px;
-  position: relative;
+.box{
+    background:white;
+    padding:30px;
+    border-radius:25px;
+    width:320px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.3);
+    position:relative;
 }
 
-h1 {
-  color: #ff4d6d;
+h1,h2{
+    color:#ff4d6d;
 }
 
-button {
-  padding: 12px 28px;
-  font-size: 18px;
-  border: none;
-  border-radius: 30px;
-  cursor: pointer;
-  margin: 10px;
+button{
+    padding:12px 25px;
+    font-size:18px;
+    border:none;
+    border-radius:30px;
+    margin:10px;
+    cursor:pointer;
 }
 
-#yes {
-  background: #ff4d6d;
-  color: white;
+#yes{
+    background:#ff4d6d;
+    color:white;
 }
 
-#no {
-  background: #adb5bd;
-  color: black;
-  position: absolute;
+#no{
+    background:gray;
+    color:white;
+    position:absolute;
+}
+
+.question{
+    display:none;
+}
+
+input{
+    padding:10px;
+    width:90%;
+    border-radius:15px;
+    border:1px solid #ccc;
+    margin-top:10px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="box">
-  <h1>Will you be my Valentine? 💘</h1>
-  <button id="yes">Yes 😍</button>
-  <button id="no">No 🙈</button>
-</div>
-
-<audio id="music">
+<audio id="music" loop>
   <source src="song.mp3" type="audio/mpeg">
 </audio>
+
+<div class="box" id="start">
+    <h1>Will You Be My Valentine? 💘</h1>
+    <button id="yes">Yes 😍</button>
+    <button id="no">No 🙈</button>
+</div>
+
+<div class="box question" id="q1">
+    <h2>Why are you so cute? 🥺💕</h2>
+    <input type="text" placeholder="Because I'm yours 😌">
+    <br><br>
+    <button onclick="next('q1','q2')">Next 💖</button>
+</div>
+
+<div class="box question" id="q2">
+    <h2>Our dream date? 🌹✨</h2>
+    <input type="text" placeholder="Candle light dinner 🕯">
+    <br><br>
+    <button onclick="next('q2','q3')">Next 💞</button>
+</div>
+
+<div class="box question" id="q3">
+    <h2>One sweet message for me 💌</h2>
+    <input type="text" placeholder="I love you forever ❤️">
+    <br><br>
+    <button onclick="finish()">Submit 😘</button>
+</div>
+
+<div class="box question" id="end">
+    <h1>I Love You So Much ❤️🥰</h1>
+    <p>You are my forever 💍✨</p>
+</div>
 
 <script>
 
@@ -70,22 +108,33 @@ const noBtn = document.getElementById("no");
 const yesBtn = document.getElementById("yes");
 const music = document.getElementById("music");
 
-noBtn.addEventListener("mouseover", function() {
-  const box = document.querySelector(".box");
-  const maxX = box.clientWidth - noBtn.offsetWidth;
-  const maxY = box.clientHeight - noBtn.offsetHeight;
+// 5 second baad hi NO bhaagega
+setTimeout(() => {
+    noBtn.addEventListener("mouseover", () => {
+        const x = Math.random() * (window.innerWidth - 100);
+        const y = Math.random() * (window.innerHeight - 100);
+        noBtn.style.left = x + "px";
+        noBtn.style.top = y + "px";
+    });
+}, 5000);
 
-  const randomX = Math.random() * maxX;
-  const randomY = Math.random() * maxY;
+// YES click
+yesBtn.onclick = () => {
+    music.play();
+    document.getElementById("start").style.display="none";
+    document.getElementById("q1").style.display="block";
+};
 
-  noBtn.style.left = randomX + "px";
-  noBtn.style.top = randomY + "px";
-});
-
-yesBtn.onclick = function(){
-  music.play();
-  alert("I Love You So Much ❤️");
+function next(current,nextPage){
+    document.getElementById(current).style.display="none";
+    document.getElementById(nextPage).style.display="block";
 }
+
+function finish(){
+    document.getElementById("q3").style.display="none";
+    document.getElementById("end").style.display="block";
+}
+
 </script>
 
 </body>
