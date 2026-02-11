@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>For My Cutie 💖</title>
+<title>For Mahak 💖</title>
 
 <style>
 body{
@@ -21,9 +21,10 @@ body{
     background:white;
     padding:30px;
     border-radius:25px;
-    width:320px;
-    box-shadow:0 10px 25px rgba(0,0,0,0.3);
+    width:330px;
+    box-shadow:0 15px 30px rgba(0,0,0,0.3);
     position:relative;
+    z-index:2;
 }
 
 h1,h2{
@@ -54,16 +55,19 @@ button{
     display:none;
 }
 
-input{
-    padding:10px;
-    width:90%;
-    border-radius:15px;
-    border:1px solid #ccc;
-    margin-top:10px;
+.heart{
+    position:fixed;
+    color:red;
+    animation:float 4s linear infinite;
+    font-size:20px;
+}
+
+@keyframes float{
+    0%{transform:translateY(100vh);}
+    100%{transform:translateY(-10vh);}
 }
 </style>
 </head>
-
 <body>
 
 <audio id="music" loop>
@@ -71,35 +75,25 @@ input{
 </audio>
 
 <div class="box" id="start">
-    <h1>Will You Be My Valentine? 💘</h1>
+    <h1>Mahak 💖</h1>
+    <h2>Will You Be My Valentine? 💘</h2>
     <button id="yes">Yes 😍</button>
     <button id="no">No 🙈</button>
 </div>
 
 <div class="box question" id="q1">
-    <h2>Why are you so cute? 🥺💕</h2>
-    <input type="text" placeholder="Because I'm yours 😌">
-    <br><br>
+    <h2>Mahak, why are you so special to me? 🥺💕</h2>
     <button onclick="next('q1','q2')">Next 💖</button>
 </div>
 
 <div class="box question" id="q2">
-    <h2>Our dream date? 🌹✨</h2>
-    <input type="text" placeholder="Candle light dinner 🕯">
-    <br><br>
-    <button onclick="next('q2','q3')">Next 💞</button>
-</div>
-
-<div class="box question" id="q3">
-    <h2>One sweet message for me 💌</h2>
-    <input type="text" placeholder="I love you forever ❤️">
-    <br><br>
-    <button onclick="finish()">Submit 😘</button>
+    <h2>Our forever starts today? 💍✨</h2>
+    <button onclick="finish()">YES FOREVER 💞</button>
 </div>
 
 <div class="box question" id="end">
-    <h1>I Love You So Much ❤️🥰</h1>
-    <p>You are my forever 💍✨</p>
+    <h1>I Love You Mahak ❤️🥰</h1>
+    <h2>You are my forever & always 💍✨</h2>
 </div>
 
 <script>
@@ -108,18 +102,29 @@ const noBtn = document.getElementById("no");
 const yesBtn = document.getElementById("yes");
 const music = document.getElementById("music");
 
-// 5 second baad hi NO bhaagega
-setTimeout(() => {
-    noBtn.addEventListener("mouseover", () => {
-        const x = Math.random() * (window.innerWidth - 100);
-        const y = Math.random() * (window.innerHeight - 100);
-        noBtn.style.left = x + "px";
-        noBtn.style.top = y + "px";
+// Floating hearts
+setInterval(()=>{
+    let heart = document.createElement("div");
+    heart.innerHTML="❤️";
+    heart.classList.add("heart");
+    heart.style.left=Math.random()*100+"vw";
+    heart.style.fontSize=(Math.random()*20+15)+"px";
+    document.body.appendChild(heart);
+    setTimeout(()=>{heart.remove()},4000);
+},500);
+
+// 5 sec baad NO bhaagega
+setTimeout(()=>{
+    noBtn.addEventListener("mouseover",()=>{
+        const x=Math.random()*(window.innerWidth-100);
+        const y=Math.random()*(window.innerHeight-100);
+        noBtn.style.left=x+"px";
+        noBtn.style.top=y+"px";
     });
-}, 5000);
+},5000);
 
 // YES click
-yesBtn.onclick = () => {
+yesBtn.onclick=()=>{
     music.play();
     document.getElementById("start").style.display="none";
     document.getElementById("q1").style.display="block";
@@ -131,11 +136,34 @@ function next(current,nextPage){
 }
 
 function finish(){
-    document.getElementById("q3").style.display="none";
+    document.getElementById("q2").style.display="none";
     document.getElementById("end").style.display="block";
+    confetti();
+}
+
+// Confetti effect
+function confetti(){
+    for(let i=0;i<100;i++){
+        let conf=document.createElement("div");
+        conf.style.position="fixed";
+        conf.style.width="8px";
+        conf.style.height="8px";
+        conf.style.backgroundColor="hsl("+Math.random()*360+"deg,100%,50%)";
+        conf.style.left=Math.random()*100+"vw";
+        conf.style.top="-10px";
+        conf.style.animation="fall 3s linear forwards";
+        document.body.appendChild(conf);
+        setTimeout(()=>conf.remove(),3000);
+    }
 }
 
 </script>
+
+<style>
+@keyframes fall{
+    to{transform:translateY(100vh);}
+}
+</style>
 
 </body>
 </html>
