@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Will You Be My Valentine? 💖</title>
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  background: linear-gradient(135deg, #ff758c, #ff7eb3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Comic Sans MS", cursive;
+  overflow: hidden;
+}
+
+.box {
+  background: white;
+  padding: 30px;
+  border-radius: 25px;
+  text-align: center;
+  box-shadow: 0 15px 30px rgba(0,0,0,0.25);
+  width: 320px;
+  position: relative;
+}
+
+h1, h2 {
+  color: #ff4d6d;
+}
+
+button {
+  padding: 12px 28px;
+  font-size: 18px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  margin: 10px;
+}
+
+#yes {
+  background: #ff4d6d;
+  color: white;
+}
+
+#no {
+  background: #adb5bd;
+  position: absolute;
+}
+
+.question {
+  display: none;
+}
+
+input {
+  width: 90%;
+  padding: 10px;
+  border-radius: 15px;
+  border: 1px solid #ccc;
+  margin-top: 10px;
+  font-size: 15px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🎵 SONG -->
+<audio id="bgMusic" loop>
+  <source src="song.mp3" type="audio/mpeg">
+</audio>
+
+<!-- START -->
+<div class="box" id="start">
+  <h1>Will you be my Valentine? 💘</h1>
+  <button id="yes">Yes 😍</button>
+  <button id="no">No 🙈</button>
+</div>
+
+<!-- Q1 -->
+<div class="box question" id="q1">
+  <h2>Why did you say YES? 💕</h2>
+  <input type="text" placeholder="Because you’re special 🥺">
+  <br><br>
+  <button onclick="nextPage('q1','q2')">Next 💌</button>
+</div>
+
+<!-- Q2 -->
+<div class="box question" id="q2">
+  <h2>Our first date? 🌹</h2>
+  <input type="text" placeholder="Coffee / Walk / Movie">
+  <br><br>
+  <button onclick="nextPage('q2','q3')">Next 💖</button>
+</div>
+
+<!-- Q3 -->
+<div class="box question" id="q3">
+  <h2>Message for me 💗</h2>
+  <input type="text" placeholder="Something sweet...">
+  <br><br>
+  <button onclick="finish()">Submit 😘</button>
+</div>
+
+<!-- END -->
+<div class="box question" id="done">
+  <h1>Yayyy! 💞</h1>
+  <p>You just made my day 🥰</p>
+</div>
+
+<script>
+const noBtn = document.getElementById("no");
+const yesBtn = document.getElementById("yes");
+const music = document.getElementById("bgMusic");
+
+// NO button bhaagega 😜
+noBtn.addEventListener("mouseover", () => {
+  const x = Math.random() * (window.innerWidth - 120);
+  const y = Math.random() * (window.innerHeight - 60);
+  noBtn.style.left = x + "px";
+  noBtn.style.top = y + "px";
+});
+
+// YES click
+yesBtn.onclick = () => {
+  music.volume = 0.5;
+  music.play();
+  document.getElementById("start").style.display = "none";
+  document.getElementById("q1").style.display = "block";
+};
+
+function nextPage(current, next) {
+  document.getElementById(current).style.display = "none";
+  document.getElementById(next).style.display = "block";
+}
+
+function finish() {
+  document.getElementById("q3").style.display = "none";
+  document.getElementById("done").style.display = "block";
+}
+</script>
+
+</body>
+</html>
