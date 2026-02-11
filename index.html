@@ -1,169 +1,138 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>For Mahak 💖</title>
 
 <style>
-body{
-    margin:0;
-    height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background: linear-gradient(135deg,#ff758c,#ff7eb3);
-    font-family: "Comic Sans MS", cursive;
-    text-align:center;
-    overflow:hidden;
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Segoe UI', sans-serif;
+    overflow: hidden;
 }
 
-.box{
-    background:white;
-    padding:30px;
-    border-radius:25px;
-    width:330px;
-    box-shadow:0 15px 30px rgba(0,0,0,0.3);
-    position:relative;
-    z-index:2;
+.container {
+    text-align: center;
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+    position: relative;
 }
 
-h1,h2{
-    color:#ff4d6d;
+h1 {
+    color: #ff4d6d;
 }
 
-button{
-    padding:12px 25px;
-    font-size:18px;
-    border:none;
-    border-radius:30px;
-    margin:10px;
-    cursor:pointer;
+button {
+    padding: 12px 25px;
+    font-size: 16px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    margin: 10px;
+    transition: 0.3s;
 }
 
-#yes{
-    background:#ff4d6d;
-    color:white;
+#yesBtn {
+    background: #ff4d6d;
+    color: white;
 }
 
-#no{
-    background:gray;
-    color:white;
-    position:absolute;
+#noBtn {
+    background: #999;
+    color: white;
+    position: absolute;
 }
 
-.question{
-    display:none;
+.hidden {
+    display: none;
 }
 
-.heart{
-    position:fixed;
-    color:red;
-    animation:float 4s linear infinite;
-    font-size:20px;
+.confetti {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    background: red;
+    top: -10px;
+    animation: fall 3s linear infinite;
 }
 
-@keyframes float{
-    0%{transform:translateY(100vh);}
-    100%{transform:translateY(-10vh);}
+@keyframes fall {
+    to {
+        transform: translateY(100vh) rotate(360deg);
+    }
 }
 </style>
 </head>
+
 <body>
 
+<div class="container">
+    <div id="start">
+        <h1>Mahak 💖</h1>
+        <p>Do you love me? 🥺</p>
+        <button id="yesBtn">Yes 💕</button>
+        <button id="noBtn">No 😅</button>
+    </div>
+
+    <div id="next" class="hidden">
+        <h1>Yayyyy 💖🥰</h1>
+        <p>You are my favorite person Mahak 💞</p>
+    </div>
+</div>
+
 <audio id="music" loop>
-  <source src="song.mp3" type="audio/mpeg">
+    <source src="song.mp3" type="audio/mpeg">
 </audio>
 
-<div class="box" id="start">
-    <h1>Mahak 💖</h1>
-    <h2>Will You Be My Valentine? 💘</h2>
-    <button id="yes">Yes 😍</button>
-    <button id="no">No 🙈</button>
-</div>
-
-<div class="box question" id="q1">
-    <h2>Mahak, why are you so special to me? 🥺💕</h2>
-    <button onclick="next('q1','q2')">Next 💖</button>
-</div>
-
-<div class="box question" id="q2">
-    <h2>Our forever starts today? 💍✨</h2>
-    <button onclick="finish()">YES FOREVER 💞</button>
-</div>
-
-<div class="box question" id="end">
-    <h1>I Love You Mahak ❤️🥰</h1>
-    <h2>You are my forever & always 💍✨</h2>
-</div>
-
 <script>
-
-const noBtn = document.getElementById("no");
-const yesBtn = document.getElementById("yes");
+const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
 const music = document.getElementById("music");
 
-// Floating hearts
-setInterval(()=>{
-    let heart = document.createElement("div");
-    heart.innerHTML="❤️";
-    heart.classList.add("heart");
-    heart.style.left=Math.random()*100+"vw";
-    heart.style.fontSize=(Math.random()*20+15)+"px";
-    document.body.appendChild(heart);
-    setTimeout(()=>{heart.remove()},4000);
-},500);
+yesBtn.addEventListener("click", function() {
 
-// 5 sec baad NO bhaagega
-setTimeout(()=>{
-    noBtn.addEventListener("mouseover",()=>{
-        const x=Math.random()*(window.innerWidth-100);
-        const y=Math.random()*(window.innerHeight-100);
-        noBtn.style.left=x+"px";
-        noBtn.style.top=y+"px";
-    });
-},5000);
+    // Play Music
+    music.play().catch(err => console.log(err));
 
-// YES click
-yesBtn.onclick=()=>{
-    music.play();
-    document.getElementById("start").style.display="none";
-    document.getElementById("q1").style.display="block";
-};
+    document.getElementById("start").classList.add("hidden");
+    document.getElementById("next").classList.remove("hidden");
 
-function next(current,nextPage){
-    document.getElementById(current).style.display="none";
-    document.getElementById(nextPage).style.display="block";
-}
-
-function finish(){
-    document.getElementById("q2").style.display="none";
-    document.getElementById("end").style.display="block";
-    confetti();
-}
-
-// Confetti effect
-function confetti(){
-    for(let i=0;i<100;i++){
-        let conf=document.createElement("div");
-        conf.style.position="fixed";
-        conf.style.width="8px";
-        conf.style.height="8px";
-        conf.style.backgroundColor="hsl("+Math.random()*360+"deg,100%,50%)";
-        conf.style.left=Math.random()*100+"vw";
-        conf.style.top="-10px";
-        conf.style.animation="fall 3s linear forwards";
+    // Confetti
+    for(let i=0; i<50; i++){
+        let conf = document.createElement("div");
+        conf.classList.add("confetti");
+        conf.style.left = Math.random()*100 + "vw";
+        conf.style.background = 
+            `hsl(${Math.random()*360},100%,50%)`;
+        conf.style.animationDuration = 
+            (Math.random()*3+2)+"s";
         document.body.appendChild(conf);
-        setTimeout(()=>conf.remove(),3000);
     }
-}
+});
 
+
+// No button bhaagega but gayab nahi hoga
+noBtn.addEventListener("mouseover", function() {
+
+    let x = Math.random() * 
+        (window.innerWidth - noBtn.offsetWidth);
+
+    let y = Math.random() * 
+        (window.innerHeight - noBtn.offsetHeight);
+
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+});
 </script>
-
-<style>
-@keyframes fall{
-    to{transform:translateY(100vh);}
-}
-</style>
 
 </body>
 </html>
